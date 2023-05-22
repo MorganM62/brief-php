@@ -1,5 +1,6 @@
 <?php
 session_start();
+$table = $_SESSION["table"];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -17,30 +18,34 @@ session_start();
    <?php 
         include "./includes/header.inc.html";
         ?>
-    <div class="d-flex justify-content-start">
-        <div class="ms-5 mt-3">
-            <a href="index.html">
-            <button type="button" class="btn btn-outline-secondary" style="min-width: 175px; max-height:39px;">Home</button>
-            </a>
-         </div>
-        <div class="ms-4 mt-3">
-            <a href="index.php?add">
-                <button type="submit" class="btn btn-primary">Ajouter des données</button>
-            </a>
-        </div>
-    </div>
     
     <?php
         if (isset($_GET['add'])){
-            
             include "./includes/form.inc.html";
+        }
+        else {
+            echo '
+            <div class="d-flex justify-content-start">
+                <div class="ms-5 mt-3">
+                    <a href="index.php">
+                        <button type="button" class="btn btn-outline-secondary" style="min-width: 175px; max-height:39px;">Home</button>
+                    </a>
+                </div>
+                <div class="ms-4 mt-3">
+                    <a href="index.php?add">
+                        <button type="submit" class="btn btn-primary">Ajouter des données</button>
+                    </a>
+                </div>
+            </div>';
         }
     ?>
     
     <?php
      include "./includes/footer.inc.html";
     ?>
+<?php
 
+?>
 
 </body>
 </html>
