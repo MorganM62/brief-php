@@ -55,7 +55,7 @@ session_start();
                     
                     $_SESSION['table'] = $table;
                     echo '
-                    <div class = "alert alert-success" "mw:90;" role="alert">
+                    <div class = "alert alert-success" role="alert">
                     Données sauvegardées !
                     </div>
                     ';
@@ -88,7 +88,7 @@ session_start();
                     echo "<h3 class = 'text-center mb-5'> ===> Lecture du tableau à l'aide de la boucle foreach</h3>";
                     $tab = 0;
                     foreach($table as $key => $value){
-                        echo "à la ligne n°"."&nbsp;".$tab++."&nbsp;"."correspond la clé"."&nbsp;".$key ."&nbsp;"."et contient"."&nbsp;".$value ."<br>";
+                        echo 'à la ligne n°'.'&nbsp;"'.$tab++.'"&nbsp;'.'correspond la clé'.'&nbsp;"'.$key .'"&nbsp;'.'et contient'.'&nbsp;"'.$value.'"<br>';
                     }
                 }
                 
@@ -118,7 +118,7 @@ session_start();
                 function readTable ($table){
                     $tab = 0;
                     foreach($table as $key => $value){
-                        echo "à la ligne n°"."&nbsp;".$tab++."&nbsp;"."correspond la clé"."&nbsp;".$key ."&nbsp;"."et contient"."&nbsp;".$value ."<br>";
+                        echo 'à la ligne n°'.'&nbsp;"'.$tab++.'"&nbsp;'.'correspond la clé'.'&nbsp;"'.$key .'"&nbsp;'.'et contient'.'&nbsp;"'.$value.'"<br>';
                     }
                 }  
             ?>
