@@ -29,8 +29,8 @@ session_start();
                 if (!empty($_SESSION)){
                 $table=$_SESSION['table'];
                 include "./includes/ul.inc.php";
+                
                 }
-
                 ?>
             </nav>
             <section class ="inline-flex flex-column ms-5 mt-4">
@@ -51,15 +51,29 @@ session_start();
                         'age' => $age,
                         'size' => $size,
                         'gender' => $gender,
+                        /* partie 2 */
+                        'HTML' => !empty($_POST['HTML']) ? ($_POST['HTML']) : null,
+                        'CSS' => !empty($_POST['CSS']) ? ($_POST['CSS']) : null,
+                        'JavaScript' => !empty($_POST['JavaScript']) ? ($_POST['JavaScript']) : null,
+                        'PHP' => !empty($_POST['PHP']) ? ($_POST['PHP']) : null,
+                        'MySQL' => !empty($_POST['MySQL']) ? ($_POST['MySQL']) : null,
+                        'Bootstrap' => !empty($_POST['Bootstrap']) ? ($_POST['Bootstrap']) : null,
+                        'Symfony' => !empty($_POST['Symfony']) ? ($_POST['Symfony']) : null,
+                        'React' => !empty($_POST['React']) ? ($_POST['React']) : null,
+                        'color' => !empty($_POST['color']) ? ($_POST['color']) : null,
+                        'date' => !empty($_POST['date']) ? ($_POST['date']) : null,
+                        'image' => !empty($_POST['image']) ? ($_POST['image']) : null,
                     );
                     
                     $_SESSION['table'] = $table;
                     echo '
-                    <div class = "alert alert-success" role="alert">
+                    <div class = "alert alert-success" role="alert" style="min-width:max-content;">
                     Données sauvegardées !
                     </div>
                     ';
                 }
+
+
                 elseif (isset($_GET['debuging'])){
                     echo '<h2 class ="text-center mb-5">debogage</h2>';
                     echo "<h3>===> Lecture du tableau à l'aide de la fonction print_r()</h3>";
@@ -99,16 +113,45 @@ session_start();
                 }
                 
                 elseif(isset($_GET['del'])){
-                    session_destroy();
+                    session_unset();
                     echo '
                     <div class = "alert alert-success" role="alert">
                     Données supprimées !
                     </div>
                     ';
                 }
-                else {
+                
+                elseif(isset($_GET['addmore'])){
+                    include "./includes/form2.inc.php";
+                    
+                }
+                
+                elseif (isset($_GET['debuging'])){
+                    echo '<h2 class ="text-center mb-5">debogage</h2>';
+                    echo "<h3>===> Lecture du tableau à l'aide de la fonction print_r()</h3>";
+                    print "<pre>";
+                    print_r ($tablette);
+                    print "<pre>";
+                }
+
+                elseif (isset($table)){
                     echo '
-                    <div style="max-width: 15rem;">
+                    <div class = "d-flex d-row">
+                        <div style="max-width: 15rem;">
+                            <a href="index.php?add">
+                                <button type="submit" class="btn btn-primary">Ajouter des données</button>
+                            </a>
+                        </div>
+                        <div class = "ms-2" style="max-width: 15rem;">
+                            <a href="index.php?addmore">
+                            <button type="submit" class="btn btn-secondary">Ajouter plus de données</button>
+                            </a>
+                        </div>
+                    </div>';
+                }
+
+                else{
+                    echo '<div style="max-width: 15rem;">
                         <a href="index.php?add">
                             <button type="submit" class="btn btn-primary">Ajouter des données</button>
                         </a>
@@ -120,7 +163,8 @@ session_start();
                     foreach($table as $key => $value){
                         echo 'à la ligne n°'.'&nbsp;"'.$tab++.'"&nbsp;'.'correspond la clé'.'&nbsp;"'.$key .'"&nbsp;'.'et contient'.'&nbsp;"'.$value.'"<br>';
                     }
-                }  
+                }
+                
             ?>
         </section>
     </div>
