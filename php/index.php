@@ -62,7 +62,7 @@ session_start();
                         'React' => !empty($_POST['React']) ? ($_POST['React']) : null,
                         'color' => !empty($_POST['color']) ? ($_POST['color']) : null,
                         'date' => !empty($_POST['date']) ? ($_POST['date']) : null,
-                        'img' => !empty($_POST['img']) ? ($_POST['img']) : null,
+
                     );
                     
                     $_SESSION['table'] = $table;
@@ -108,6 +108,7 @@ session_start();
                     echo "<h2 class ='text-center mb-5'>Fonction</h2>";
                     echo"<h3 class 'text-center mb-5'> ===> j'utilise ma fonction readTable()</h3><br>";
                     readTable($table);
+                    echo '<img src="./uploaded/img1.png">';
                 }
                 
                 elseif(isset($_GET['del'])){
@@ -152,23 +153,29 @@ session_start();
                     $tab = 0; 
                     $filter = array_filter($_SESSION['table']);
                     foreach($filter as $key => $value){
-                        echo 'à la igne n°'.'&nbsp;"'.$tab++.'"&nbsp;'.'correspond la clé'.'&nbsp;"'.$key .'"&nbsp;'.'et contient'.'&nbsp;"'.$value.'"<br>';
+                        echo 'à la ligne n°'.'&nbsp;"'.$tab++.'"&nbsp;'.'correspond la clé'.'&nbsp;"'.$key .'"&nbsp;'.'et contient'.'&nbsp;"'.$value.'"<br>';
                     }
                 }
                 
-                if (!is_dir('uploaded'))
-                        mkdir('uploaded', 0777);
+                if (isset($_FILES['img']['size'])){
+                $taille_image=$_FILES['img']['size'];
+                $taille_max = 2000000;
+                if ($taille_image>$taille_max){
+                    echo "Vous avez dépassé la taille de fichier autorisée";
+                    exit();
+                }
+            }
+            
+            elseif (!is_dir('uploaded'))
+            mkdir('uploaded', 0777);
+            $upload = "./uploaded/" .'img1.png';
+            $_FILES['img']['name'] = $upload;
 
-
-                $upload = "./uploaded/" .'img1.png';
-                $_FILES['img']['name'] = $upload;                
-                
                 if (isset($_FILES['img']['tmp_name'])) {
                     $return = copy($_FILES['img']['tmp_name'], $_FILES['img']['name']);
                 }
                 
                 ?>
-
         </section>
     </div>
     <?php
