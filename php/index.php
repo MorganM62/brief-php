@@ -38,7 +38,7 @@ session_start();
                 if (isset($_GET['add'])){
                     include "./includes/form.inc.html";
                 }
-                elseif (isset($_POST['register'])){
+                elseif (isset($_POST['register']) xor isset($_POST['register_more'])){
                     $prénom = $_POST['first_name'];
                     $nom = $_POST['last_name'];
                     $age = $_POST['age'];
@@ -62,7 +62,7 @@ session_start();
                         'React' => !empty($_POST['React']) ? ($_POST['React']) : null,
                         'color' => !empty($_POST['color']) ? ($_POST['color']) : null,
                         'date' => !empty($_POST['date']) ? ($_POST['date']) : null,
-                        'image' => !empty($_POST['image']) ? ($_POST['image']) : null,
+                        'img' => !empty($_POST['img']) ? ($_POST['img']) : null,
                     );
                     
                     $_SESSION['table'] = $table;
@@ -78,7 +78,7 @@ session_start();
                     echo '<h2 class ="text-center mb-5">debogage</h2>';
                     echo "<h3>===> Lecture du tableau à l'aide de la fonction print_r()</h3>";
                     print "<pre>";
-                    print_r ($table);
+                    print_r (array_filter($table));
                     print "<pre>";
                 }
                 elseif (isset($_GET['concatenation'])){
@@ -100,15 +100,13 @@ session_start();
                 elseif (isset($_GET['loop'])){
                     echo "<h2 class = 'text-center mb-5'>Boucle</h2>";
                     echo "<h3 class = 'text-center mb-5'> ===> Lecture du tableau à l'aide de la boucle foreach</h3>";
-                    $tab = 0;
-                    foreach($table as $key => $value){
-                        echo 'à la ligne n°'.'&nbsp;"'.$tab++.'"&nbsp;'.'correspond la clé'.'&nbsp;"'.$key .'"&nbsp;'.'et contient'.'&nbsp;"'.$value.'"<br>';
-                    }
+                    readTable($table);
+
                 }
                 
                 elseif(isset($_GET['function'])){
                     echo "<h2 class ='text-center mb-5'>Fonction</h2>";
-                    echo"<h3 class 'text-center mb-5'> ===>j'utilise ma fonction readTable()</h3><br>";
+                    echo"<h3 class 'text-center mb-5'> ===> j'utilise ma fonction readTable()</h3><br>";
                     readTable($table);
                 }
                 
@@ -124,14 +122,6 @@ session_start();
                 elseif(isset($_GET['addmore'])){
                     include "./includes/form2.inc.php";
                     
-                }
-                
-                elseif (isset($_GET['debuging'])){
-                    echo '<h2 class ="text-center mb-5">debogage</h2>';
-                    echo "<h3>===> Lecture du tableau à l'aide de la fonction print_r()</h3>";
-                    print "<pre>";
-                    print_r ($tablette);
-                    print "<pre>";
                 }
 
                 elseif (isset($table)){
@@ -159,13 +149,26 @@ session_start();
                 }
                 
                 function readTable ($table){
-                    $tab = 0;
-                    foreach($table as $key => $value){
-                        echo 'à la ligne n°'.'&nbsp;"'.$tab++.'"&nbsp;'.'correspond la clé'.'&nbsp;"'.$key .'"&nbsp;'.'et contient'.'&nbsp;"'.$value.'"<br>';
+                    $tab = 0; 
+                    $filter = array_filter($_SESSION['table']);
+                    foreach($filter as $key => $value){
+                        echo 'à la igne n°'.'&nbsp;"'.$tab++.'"&nbsp;'.'correspond la clé'.'&nbsp;"'.$key .'"&nbsp;'.'et contient'.'&nbsp;"'.$value.'"<br>';
                     }
                 }
                 
-            ?>
+                if (!is_dir('uploaded'))
+                        mkdir('uploaded', 0777);
+
+
+                $upload = "./uploaded/" .'img1.png';
+                $_FILES['img']['name'] = $upload;                
+                
+                if (isset($_FILES['img']['tmp_name'])) {
+                    $return = copy($_FILES['img']['tmp_name'], $_FILES['img']['name']);
+                }
+                
+                ?>
+
         </section>
     </div>
     <?php

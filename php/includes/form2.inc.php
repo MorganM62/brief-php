@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>addmore</title>
-</head>
-
-<body>
-  <form method="POST" action="index.php">
+  <form method="POST" action="index.php" enctype="multipart/form-data">
     <h1 class="text-center">Ajouter plus de données</h1>
     <div class="row">
       <div class="card col-md-7 mx-auto-my-1">
@@ -100,15 +89,11 @@
       <!-- Image -->
       <div class="card col-11 mx-auto my-1">
       <label for="formFile" class="form-label">Joindre une image (jpg ou pgn)</label>
-        <input class="form-control" type="file" id="formFile" name ="image">
+        <input class="form-control" type="file" id="formFile" name ="img">
       </div>
     </div>
     <!-- Bouton Enregistrer -->
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-      <button type="submit" class="btn btn-primary me-4 mt-4" style="min-width: 175px; max-height:39px;" data-bs-placement="right" name="register">Enregistrer les données</button>
+      <button type="submit" class="btn btn-primary me-4 mt-4" style="min-width: 175px; max-height:39px;" data-bs-placement="right" name="register_more">Enregistrer les données</button>
     </div>
   </form>
-</body>
-</body>
-
-</html>
