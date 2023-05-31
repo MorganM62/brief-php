@@ -62,10 +62,11 @@ session_start();
                         'React' => !empty($_POST['React']) ? ($_POST['React']) : null,
                         'color' => !empty($_POST['color']) ? ($_POST['color']) : null,
                         'date' => !empty($_POST['date']) ? ($_POST['date']) : null,
-
+                        'img' => !empty($_FILES['img']) ? ($_FILES['img']) : null,
                     );
                     
                     $_SESSION['table'] = $table;
+                    
                     echo '
                     <div class = "alert alert-success" role="alert" style="min-width:max-content;">
                     Données sauvegardées !
@@ -108,7 +109,6 @@ session_start();
                     echo "<h2 class ='text-center mb-5'>Fonction</h2>";
                     echo"<h3 class 'text-center mb-5'> ===> j'utilise ma fonction readTable()</h3><br>";
                     readTable($table);
-                    echo '<img src="./uploaded/img1.png">';
                 }
                 
                 elseif(isset($_GET['del'])){
@@ -125,7 +125,7 @@ session_start();
                     
                 }
 
-                elseif (isset($table)){
+                else{
                     echo '
                     <div class = "d-flex d-row">
                         <div style="max-width: 15rem;">
@@ -141,21 +141,18 @@ session_start();
                     </div>';
                 }
 
-                else{
-                    echo '<div style="max-width: 15rem;">
-                        <a href="index.php?add">
-                            <button type="submit" class="btn btn-primary">Ajouter des données</button>
-                        </a>
-                    </div>';
-                }
-                
                 function readTable ($table){
                     $tab = 0; 
                     $filter = array_filter($_SESSION['table']);
                     foreach($filter as $key => $value){
-                        echo 'à la ligne n°'.'&nbsp;"'.$tab++.'"&nbsp;'.'correspond la clé'.'&nbsp;"'.$key .'"&nbsp;'.'et contient'.'&nbsp;"'.$value.'"<br>';
+                        if (is_array($value)){
+                            $value = '<div class="center">
+                            <img src="./uploaded/'. $table['img']['name'].'"style="max-width:100">
+                            </div>';
+                        }
+                        echo 'à la ligne n°'.'&nbsp;"'.$tab++.'"&nbsp;'.'correspond la clé'.'&nbsp;"'.$key .'"&nbsp;'.'et contient'.'&nbsp;"'.$value.'"<br>';   
                     }
-                }
+                } 
                 
                 if (isset($_FILES['img']['size'])){
                 $taille_image=$_FILES['img']['size'];
@@ -168,11 +165,11 @@ session_start();
             
             elseif (!is_dir('uploaded'))
             mkdir('uploaded', 0777);
-            $upload = "./uploaded/" .'img1.png';
-            $_FILES['img']['name'] = $upload;
+            $upload = "./uploaded/";
 
                 if (isset($_FILES['img']['tmp_name'])) {
-                    $return = copy($_FILES['img']['tmp_name'], $_FILES['img']['name']);
+                    $_SESSION['img'] = $_FILES['img']['tmp_name'];
+                    $return = move_uploaded_file($_FILES['img']['tmp_name'], $upload.$_FILES['img']['name']);
                 }
                 
                 ?>
