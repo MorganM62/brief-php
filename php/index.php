@@ -158,7 +158,9 @@ session_start();
                 $taille_image=$_FILES['img']['size'];
                 $taille_max = 2000000;
                 if ($taille_image>$taille_max){
-                    echo "Vous avez dépassé la taille de fichier autorisée";
+                    echo '<div class = "alert alert-danger" role="alert" style="min-width:max-content;">
+                    Fichier trop volumineux !
+                    </div>';
                     exit();
                 }
             }
